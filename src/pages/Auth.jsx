@@ -149,13 +149,13 @@ const Auth = ({ onAuthenticate }) => {
                   htmlFor="penanggungjawab"
                   className="block text-sm font-medium mb-1 md:text-base lg:text-lg xl:text-xl"
                 >
-                  Nama Penanggung Jawab
+                  Name Of Person In Charge
                 </label>
                 <input
                   type="text"
                   name="penanggungjawab"
                   id="penanggungjawab"
-                  placeholder="Nama penanggung jawab"
+                  placeholder="Name Of Person In Charge"
                   required
                   value={formData.penanggungjawab}
                   onChange={handleChange}
