@@ -37,7 +37,7 @@ const Sidebar = ({ isOpen, onClose, activePage, onPageChange }) => (
       </li>
     </ul>
     <p className="text-gray-400 text-xs sm:text-sm md:text-base font-semibold hidden md:block md:mt-4 md:ml-2 xl:text-lg">
-      Help & Settings
+      Help
     </p>
     <ul className="mt-4">
       <li className="py-2 sm:py-4">
