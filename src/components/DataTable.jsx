@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import TableRow from './TableRow';  // Import the TableRow component
+import TableRow from './TableRow';  
 
 const DataTable = ({ rows, onEditPatient, onViewPatientDetails, onDeletePatient, onExportPatient }) => (
   <div className="overflow-hidden rounded-lg p-2 shadow-lg mt-2" style={{ height: 'calc(100vh - 200px)' }}>
@@ -36,7 +36,7 @@ const DataTable = ({ rows, onEditPatient, onViewPatientDetails, onDeletePatient,
         <tbody className="text-gray-500">
           {rows.map((row, index) => (
             <TableRow
-              key={row.registration_number || `temp-${index}`}  // Use registration_number or a fallback key
+              key={row.registration_number || `temp-${index}`}  
               number={index + 1}
               birthDate={row.birth_date}
               fullName={row.full_name}
@@ -54,7 +54,6 @@ const DataTable = ({ rows, onEditPatient, onViewPatientDetails, onDeletePatient,
   </div>
 );
 
-// DataTable PropTypes
 DataTable.propTypes = {
   rows: PropTypes.arrayOf(
     PropTypes.shape({

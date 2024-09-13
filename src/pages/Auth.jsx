@@ -6,9 +6,9 @@ import Logo from '../assets/logo.webp';
 import { useGeolocated } from 'react-geolocated';
 
 const Auth = ({ onAuthenticate }) => {
-  const [isRegistering, setIsRegistering] = useState(false); // State awal Login
-  const [location, setLocation] = useState({ latitude: null, longitude: null }); // State untuk lokasi
-  const [useCurrentLocation, setUseCurrentLocation] = useState(false); // State untuk checkbox lokasi
+  const [isRegistering, setIsRegistering] = useState(false); 
+  const [location, setLocation] = useState({ latitude: null, longitude: null }); 
+  const [useCurrentLocation, setUseCurrentLocation] = useState(false); 
 
   const { coords, getPosition } = useGeolocated({
     positionOptions: {
@@ -30,7 +30,6 @@ const Auth = ({ onAuthenticate }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Handle the checkbox state change
   const handleCheckboxChange = () => {
     setUseCurrentLocation((prev) => !prev);
     if (!useCurrentLocation) {
@@ -82,7 +81,6 @@ const Auth = ({ onAuthenticate }) => {
   return (
     <div className="bg-gray-100 flex flex-col items-center justify-center min-h-screen sm:flex-row">
       <div className="flex flex-col sm:flex-row w-full min-h-screen">
-        {/* Informational Box */}
         <div className="w-full flex-1 flex items-center justify-center bg-indigo-700 p-8 sm:bg-white md:p-10 min-h-screen sm:min-h-0 2xl:p-16 sm:min-w-sm md:min-w-md lg:min-w-lg group">
           <div className="w-full h-full border shadow-[0px_6px_20px_0px_rgb(255_255_255_/_0.7)] overflow-hidden flex items-center justify-center rounded-xl sm:bg-indigo-700 sm:border-none sm:shadow-none">
             <div className="w-full p-4 sm:p-6 md:p-8 lg:p-10 xl:p-14">
@@ -98,7 +96,6 @@ const Auth = ({ onAuthenticate }) => {
           </div>
         </div>
 
-        {/* Login/Register Form */}
         <div className="w-full flex-1 bg-white p-8 flex flex-col justify-center sm:min-w-sm md:min-w-md md:p-10 lg:min-w-lg lg:p-14 min-h-screen sm:min-h-0 overflow-y-auto">
           <h1 className="text-2xl font-bold text-center mb-6 md:text-3xl lg:text-4xl xl:text-5xl">
             {isRegistering ? 'REGISTER' : 'LOGIN'}
@@ -106,7 +103,6 @@ const Auth = ({ onAuthenticate }) => {
           <form onSubmit={handleSubmit} autoComplete="off">
             {isRegistering ? (
               <>
-                {/* Register Form */}
                 <div className="flex gap-4 mb-4">
                   <div className="flex-1">
                     <label
@@ -198,7 +194,6 @@ const Auth = ({ onAuthenticate }) => {
                   />
                 </div>
 
-                {/* Register Current Location Checkbox */}
                 <div className="flex items-center mb-6">
                   <input
                     type="checkbox"
@@ -212,7 +207,6 @@ const Auth = ({ onAuthenticate }) => {
                   </label>
                 </div>
 
-                {/* Display Coordinates */}
                 {useCurrentLocation && location.latitude && location.longitude && (
                   <div className="mb-6">
                     <div className="flex justify-start">
@@ -226,7 +220,6 @@ const Auth = ({ onAuthenticate }) => {
               </>
             ) : (
               <>
-                {/* Login Form */}
                 <div className="mb-4">
                   <label
                     htmlFor="email"

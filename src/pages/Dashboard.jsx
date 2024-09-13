@@ -1,4 +1,3 @@
-// Dashboard.js
 import { useState } from 'react';
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
@@ -18,7 +17,6 @@ import useNotification from '../hooks/useNotification';
 import useExport from '../hooks/useExport';
 
 const Dashboard = () => {
-  // Use custom hooks
   const { isAuthenticated, authenticateUser, handleLogout } = useAuth();
   const { notification, setNotification, closeNotification } = useNotification();
   const { sidebarOpen, activePage, toggleSidebar, handlePageChange } = useSidebar();
@@ -55,7 +53,6 @@ const Dashboard = () => {
     setView('detail');
   };
 
-  // Authentication check
   if (!isAuthenticated) {
     return <Auth onAuthenticate={authenticateUser} />;
   }

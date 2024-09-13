@@ -1,23 +1,22 @@
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
-import api from '../api/axios'; // Ensure you import the correct API instance
+import api from '../api/axios'; 
 
 const DashboardPatient = ({ onBack, patient, onUpdatePatient, onAddPatient, setNotification }) => {
   const [formData, setFormData] = useState({
     full_name: '',
     gender: '',
-    birth_date: '', // Use birth_date instead of age
+    birth_date: '', 
     phone: '',
     address: '',
   });
 
-  // Initialize form data if editing an existing patient
   useEffect(() => {
     if (patient) {
       setFormData({
         full_name: patient.full_name,
         gender: patient.gender,
-        birth_date: patient.birth_date, // Initialize birth_date
+        birth_date: patient.birth_date, 
         phone: patient.phone,
         address: patient.address,
       });
@@ -41,18 +40,16 @@ const DashboardPatient = ({ onBack, patient, onUpdatePatient, onAddPatient, setN
       };
   
       if (patient && patient.registration_number) {
-        // PATCH existing patient without sending registration_number
         await api.patch(`/medrec/patients/${patient.registration_number}/`, dataToSend);
         onUpdatePatient(dataToSend);
         setNotification({ message: 'Patient updated successfully.', type: 'success' });
       } else {
-        // POST new patient without sending registration_number
         const response = await api.post('/medrec/patients/', dataToSend);
-        onAddPatient(response.data); // Backend will generate registration_number
+        onAddPatient(response.data); 
         setNotification({ message: 'Patient added successfully.', type: 'success' });
       }
   
-      onBack(); // Go back to the previous view
+      onBack(); 
     } catch (error) {
       console.error('Error saving patient data:', error);
       const errorMessage = error.response?.data?.detail ||

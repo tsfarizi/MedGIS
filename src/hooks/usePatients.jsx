@@ -1,4 +1,3 @@
-// hooks/usePatients.js
 import { useState, useEffect } from 'react';
 import api from '../api/axios';
 

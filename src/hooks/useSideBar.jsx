@@ -1,4 +1,3 @@
-// hooks/useSidebar.js
 import { useState } from 'react';
 
 const useSidebar = () => {

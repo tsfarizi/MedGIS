@@ -1,4 +1,3 @@
-// src/components/ChartComponent.jsx
 import { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Doughnut } from 'react-chartjs-2';

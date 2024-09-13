@@ -28,7 +28,6 @@ const HelpCenter = ({ setNotification }) => {
         type: 'success',
       });
 
-      // Clear fields after successful submission
       setTitle('');
       setDescription('');
     } catch {
@@ -41,7 +40,6 @@ const HelpCenter = ({ setNotification }) => {
       <div className="w-full px-2 py-2 overflow-auto sm:no-scrollbar h-screen sm:px-6 md:px-10 lg:py-4 2xl:px-12 2xl:py-5">
         <h2 className="font-semibold mt-7 text-xl md:text-2xl lg:text-3xl xl:text-4xl">Help Center</h2>
 
-        {/* Section 1: Search Patient */}
         <div className="mt-6">
           <h3 className="font-medium md:text-lg lg:text-xl xl:text-2xl">1. Search Patient</h3>
           <div className="pt-2">
@@ -52,7 +50,6 @@ const HelpCenter = ({ setNotification }) => {
           </p>
         </div>
 
-        {/* Section 2: Add Patient */}
         <div className="mt-6">
           <h3 className="font-medium md:text-lg lg:text-xl xl:text-2xl">2. Add Patient</h3>
           <div className="pt-2">
@@ -64,7 +61,6 @@ const HelpCenter = ({ setNotification }) => {
           </p>
         </div>
 
-        {/* Section 3: Patient Information */}
         <div className="mt-6">
           <h3 className="font-medium md:text-lg lg:text-xl xl:text-2xl">3. Patient Information</h3>
           <div className="pt-2">
@@ -75,7 +71,6 @@ const HelpCenter = ({ setNotification }) => {
           </p>
         </div>
 
-        {/* Section 4: Edit and Delete */}
         <div className="mt-6">
           <h3 className="font-medium md:text-lg lg:text-xl xl:text-2xl">4. Edit and Delete</h3>
           <div className="pt-2">
@@ -87,7 +82,6 @@ const HelpCenter = ({ setNotification }) => {
           </ul>
         </div>
 
-        {/* Section 5: Add Record */}
         <div className="mt-6">
           <h3 className="font-medium md:text-lg lg:text-xl xl:text-2xl">5. Add Record</h3>
           <div className="pt-2">
@@ -98,7 +92,6 @@ const HelpCenter = ({ setNotification }) => {
           </p>
         </div>
 
-        {/* Section 6: Doughnut Chart */}
         <div className="mt-6">
           <h3 className="font-medium md:text-lg lg:text-xl xl:text-2xl">6. Doughnut Chart</h3>
           <div className="pt-2">
@@ -110,7 +103,6 @@ const HelpCenter = ({ setNotification }) => {
           </p>
         </div>
 
-        {/* Section 7: GIS Maps */}
         <div className="mt-6">
           <h3 className="font-medium md:text-lg lg:text-xl xl:text-2xl">7. GIS Maps</h3>
           <p className="text-xs pl-3 pt-3 text-justify sm:text-sm md:text-base lg:text-lg xl:text-xl">
@@ -118,7 +110,6 @@ const HelpCenter = ({ setNotification }) => {
           </p>
         </div>
 
-        {/* Report Section */}
         <h2 className="font-semibold mt-7 mb-6 text-xl md:text-2xl lg:text-3xl xl:text-4xl">Report</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">

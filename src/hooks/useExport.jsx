@@ -1,4 +1,3 @@
-// hooks/useExport.js
 import api from '../api/axios';
 
 const useExport = (setNotification) => {

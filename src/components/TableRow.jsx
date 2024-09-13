@@ -3,17 +3,15 @@ import deleteIcon from '../assets/Delete.svg';
 import editIcon from '../assets/Edit.svg';
 import FeatherIcon from './FeatherIcon';
 
-// Function to format date to DD/MM/YYYY
 const formatDate = (date) => {
   if (!date) return '';
   const d = new Date(date);
   const day = d.getDate();
-  const month = d.getMonth() + 1; // getMonth() returns month from 0-11
+  const month = d.getMonth() + 1;
   const year = d.getFullYear();
   return `${day}/${month}/${year}`;
 };
 
-// Function to get registered and last visit dates
 const getRecordDates = (medicalRecords) => {
   if (!medicalRecords || medicalRecords.length === 0) return { registered: '', lastVisit: '' };
 
@@ -24,7 +22,6 @@ const getRecordDates = (medicalRecords) => {
   return { registered, lastVisit };
 };
 
-// TableRow Component
 const TableRow = ({
   number,
   birthDate = '',
@@ -69,7 +66,6 @@ const TableRow = ({
   );
 };
 
-// TableRow PropTypes
 TableRow.propTypes = {
   number: PropTypes.number.isRequired,
   birthDate: PropTypes.string,

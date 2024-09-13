@@ -5,12 +5,11 @@ import SearchBar from './SearchBar';
 import AddPatientButton from './AddPatientButton';
 import DataTable from './DataTable';
 
-// Function to format date to DD/MM/YYYY
 const formatDate = (date) => {
   if (!date) return '';
   const d = new Date(date);
   const day = d.getDate();
-  const month = d.getMonth() + 1; // getMonth() returns month from 0-11
+  const month = d.getMonth() + 1; 
   const year = d.getFullYear();
   return `${day}/${month}/${year}`;
 };
@@ -36,14 +35,13 @@ const DashboardHome = ({
     const fullName = row.full_name || '';
     const phone = row.phone || '';
     const registrationNumber = row.registration_number || '';
-    const birthDate = formatDate(row.birth_date); // Format birth date for comparison
-
-    // Search through full name, phone, registration number, or formatted birth date
+    const birthDate = formatDate(row.birth_date); 
+    
     return (
       fullName.toLowerCase().includes(searchQuery.toLowerCase()) ||
       phone.includes(searchQuery) ||
       registrationNumber.includes(searchQuery) ||
-      birthDate.includes(searchQuery) // Match formatted birth date with the query
+      birthDate.includes(searchQuery) 
     );
   });
 
@@ -96,7 +94,7 @@ DashboardHome.propTypes = {
   patientRows: PropTypes.arrayOf(
     PropTypes.shape({
       address: PropTypes.string,
-      birth_date: PropTypes.string, // Ensure birth_date is string
+      birth_date: PropTypes.string, 
       clinic: PropTypes.string,
       full_name: PropTypes.string,
       gender: PropTypes.string,
