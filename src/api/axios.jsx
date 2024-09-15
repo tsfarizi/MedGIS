@@ -6,7 +6,7 @@ export const calculateExpirationTime = (expiresInMinutes) => {
 };
 
 const api = axios.create({
-  baseURL: '...',
+  baseURL: '...', //Change the value with your API endpoint
   headers: {
     'Content-Type': 'application/json',
   },
