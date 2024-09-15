@@ -6,7 +6,7 @@ export const calculateExpirationTime = (expiresInMinutes) => {
 };
 
 const api = axios.create({
-  baseURL: 'https://8crksdzg-8000.asse.devtunnels.ms',
+  baseURL: '...',
   headers: {
     'Content-Type': 'application/json',
   },
