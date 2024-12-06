@@ -6,10 +6,11 @@ export const calculateExpirationTime = (expiresInMinutes) => {
 };
 
 const api = axios.create({
-  baseURL: '...', //Change the value with your API endpoint
+  baseURL: '...', // Change the value with your API endpoint
   headers: {
     'Content-Type': 'application/json',
   },
+  timeout: 3000, 
 });
 
 let isRefreshing = false;
@@ -37,9 +38,14 @@ api.interceptors.request.use(
 
 api.interceptors.response.use(
   (response) => response,
-  (error) => {
+  async (error) => {
     const { response } = error;
     const originalRequest = error.config;
+
+    if (error.code === 'ECONNABORTED') {
+      console.error('Server timeout occurred');
+      return Promise.reject(new Error('Server is down'));
+    }
 
     if (
       response &&
@@ -61,31 +67,29 @@ api.interceptors.response.use(
 
       const refreshToken = Cookies.get('refreshToken');
 
-      return axios
-        .post('https://8crksdzg-8000.asse.devtunnels.ms/auth/token/refresh/', {
+      try {
+        const res = await api.post('/auth/token/refresh/', {
           refresh: refreshToken,
-        })
-        .then((res) => {
-          isRefreshing = false;
-          const { access } = res.data;
-          const newExpiryTime = calculateExpirationTime(15);
-          Cookies.set('accessToken', access, { expires: 1 / 96 });
-          localStorage.setItem('accessTokenExpiry', newExpiryTime);
-
-          onRefreshed(access);
-
-          originalRequest.headers.Authorization = `Bearer ${access}`;
-          return api(originalRequest);
-        })
-        .catch((err) => {
-          isRefreshing = false;
-          console.error('Refresh token failed or expired:', err);
-          Cookies.remove('accessToken');
-          Cookies.remove('refreshToken');
-          localStorage.removeItem('accessTokenExpiry');
-          window.location.href = '/';
-          return Promise.reject(err);
         });
+        isRefreshing = false;
+        const { access } = res.data;
+        const newExpiryTime = calculateExpirationTime(15);
+        Cookies.set('accessToken', access, { expires: 1 / 96 });
+        localStorage.setItem('accessTokenExpiry', newExpiryTime);
+
+        onRefreshed(access);
+
+        originalRequest.headers.Authorization = `Bearer ${access}`;
+        return await api(originalRequest);
+      } catch (err) {
+        isRefreshing = false;
+        console.error('Refresh token failed or expired:', err);
+        Cookies.remove('accessToken');
+        Cookies.remove('refreshToken');
+        localStorage.removeItem('accessTokenExpiry');
+        window.location.href = '/';
+        return await Promise.reject(err);
+      }
     }
 
     return Promise.reject(error);
