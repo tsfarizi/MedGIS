@@ -4,14 +4,15 @@ import logo from '../assets/medgis-56x56.jpg';
 
 const Home = () => {
     const [mapHtml, setMapHtml] = useState('');
+    const [error, setError] = useState('');
 
     useEffect(() => {
         const fetchMapData = async () => {
             try {
                 const response = await api.get('/medgis_gis_map/');
                 setMapHtml(response.data.map_html);
-            } catch (error) {
-                console.error('Error fetching map data:', error);
+            } catch (err) {
+                setError(err.message === 'Server is down' ? 'Server is down' : 'Error loading map data');
             }
         };
 
@@ -37,10 +38,16 @@ const Home = () => {
                     Join as a Partner
                 </a>
             </div>
-            <div
-                dangerouslySetInnerHTML={{ __html: mapHtml }}
-                className="h-[250px] sm:h-[400px] md:h-[500px] lg:h-[600px] w-full rounded-xl shadow-lg border border-gray-300 overflow-hidden"
-            />
+            {error ? (
+                <div className="h-[250px] sm:h-[400px] md:h-[500px] lg:h-[600px] w-full flex items-center justify-center rounded-xl shadow-lg border border-gray-300 bg-red-100 text-red-600">
+                    {error}
+                </div>
+            ) : (
+                <div
+                    dangerouslySetInnerHTML={{ __html: mapHtml }}
+                    className="h-[250px] sm:h-[400px] md:h-[500px] lg:h-[600px] w-full rounded-xl shadow-lg border border-gray-300 overflow-hidden"
+                />
+            )}
         </div>
     );
 };
