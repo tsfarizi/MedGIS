@@ -6,24 +6,25 @@ import Logo from '../assets/logo.webp';
 import { useGeolocated } from 'react-geolocated';
 
 const Auth = ({ onAuthenticate }) => {
-  const [isRegistering, setIsRegistering] = useState(false); 
-  const [location, setLocation] = useState({ latitude: null, longitude: null }); 
-  const [useCurrentLocation, setUseCurrentLocation] = useState(false); 
-
-  const { coords, getPosition } = useGeolocated({
-    positionOptions: {
-      enableHighAccuracy: true,
-    },
-    userDecisionTimeout: 5000,
-    onError: () => console.error('Error retrieving location'),
-  });
-
+  const [isRegistering, setIsRegistering] = useState(false);
+  const [location, setLocation] = useState({ latitude: null, longitude: null });
+  const [useCurrentLocation, setUseCurrentLocation] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
     clinic_name: '',
     phone_number: '',
     penanggungjawab: '',
+  });
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const { coords, getPosition } = useGeolocated({
+    positionOptions: {
+      enableHighAccuracy: true,
+    },
+    userDecisionTimeout: 5000,
+    onError: () => {},
   });
 
   const handleChange = (e) => {
@@ -44,6 +45,8 @@ const Auth = ({ onAuthenticate }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
+    setErrorMessage('');
     try {
       const url = isRegistering ? '/auth/register/' : '/auth/login/';
       const requestData = isRegistering
@@ -60,22 +63,28 @@ const Auth = ({ onAuthenticate }) => {
             email: formData.email,
             password: formData.password,
           };
-
       const response = await api.post(url, requestData);
       const { access, refresh } = response.data;
       const accessTokenExpiry = calculateExpirationTime(15);
-
       Cookies.set('accessToken', access, { expires: 1 / 96 });
       Cookies.set('refreshToken', refresh, { expires: 1 });
       localStorage.setItem('accessTokenExpiry', accessTokenExpiry);
-
+      setIsLoading(false);
       onAuthenticate();
     } catch (error) {
-      console.error('Authentication error:', error);
-      if (error.response) {
-        console.error('Response data:', error.response.data);
-      }
+      setIsLoading(false);
+      setErrorMessage('server is down, try again later');
+      console.log(error);
+      setTimeout(() => {
+        setErrorMessage('');
+      }, 2000);
     }
+  };
+
+  const getButtonText = () => {
+    if (isLoading) return 'Loading...';
+    if (errorMessage) return errorMessage;
+    return isRegistering ? 'REGISTER' : 'LOGIN';
   };
 
   return (
@@ -193,7 +202,6 @@ const Auth = ({ onAuthenticate }) => {
                     className="w-full p-2 lg:p-4 border rounded-xl shadow-md focus:outline-none focus:valid:border-green-500 focus:invalid:border-red-500"
                   />
                 </div>
-
                 <div className="flex items-center mb-6">
                   <input
                     type="checkbox"
@@ -206,7 +214,6 @@ const Auth = ({ onAuthenticate }) => {
                     Register current location as clinic location
                   </label>
                 </div>
-
                 {useCurrentLocation && location.latitude && location.longitude && (
                   <div className="mb-6">
                     <div className="flex justify-start">
@@ -262,7 +269,7 @@ const Auth = ({ onAuthenticate }) => {
               type="submit"
               className="w-full bg-indigo-700 text-white p-3 rounded-xl shadow-lg font-bold active:translate-y-0.5 hover:bg-indigo-900 md:p-4 lg:text-lg xl:text-xl"
             >
-              {isRegistering ? 'REGISTER' : 'LOGIN'}
+              {getButtonText()}
             </button>
           </form>
           <p className="text-center text-xs text-gray-600 mt-2 sm:text-sm md:text-md lg:text-lg">
@@ -272,7 +279,10 @@ const Auth = ({ onAuthenticate }) => {
             <button
               type="button"
               className="text-blue-600 hover:underline hover:text-blue-800 ml-2"
-              onClick={() => setIsRegistering(!isRegistering)}
+              onClick={() => {
+                setIsRegistering(!isRegistering);
+                setErrorMessage('');
+              }}
             >
               {isRegistering ? 'Login' : 'Register'}
             </button>
